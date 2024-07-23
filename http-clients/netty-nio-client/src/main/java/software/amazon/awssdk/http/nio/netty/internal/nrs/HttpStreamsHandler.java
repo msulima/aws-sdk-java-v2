@@ -327,6 +327,11 @@ abstract class HttpStreamsHandler<InT extends HttpMessage, OutT extends HttpMess
             ctx.writeAndFlush(out.message);
 
             ctx.pipeline().addAfter(ctx.name(), ctx.name() + "-body-subscriber", subscriber);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             subscribeSubscriberToStream(streamed, subscriber);
         }
 
